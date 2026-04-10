@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Luxury — AI Systems for Real Estate Agents</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #0a0a0a;
+      color: #f0ece4;
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 60px;
+      border-bottom: 1px solid #1f1f1f;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #c9a96e;
+      font-family: 'Georgia', serif;
+    }
+
+    .nav-cta {
+      background: #c9a96e;
+      color: #0a0a0a;
+      padding: 10px 24px;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: 'Arial', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: #e0bf86; }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 100px 60px 80px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #c9a96e;
+      font-family: 'Arial', sans-serif;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 400;
+      line-height: 1.25;
+      margin-bottom: 28px;
+      color: #f0ece4;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: #c9a96e;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #a09880;
+      max-width: 600px;
+      margin: 0 auto 48px;
+      font-family: 'Arial', sans-serif;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: #c9a96e;
+      color: #0a0a0a;
+      padding: 16px 40px;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-family: 'Arial', sans-serif;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+
+    .hero-cta:hover { background: #e0bf86; }
+
+    /* DIVIDER */
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: #c9a96e;
+      margin: 0 auto 80px;
+    }
+
+    /* PAIN */
+    .pain {
+      background: #0f0f0f;
+      padding: 80px 60px;
+      text-align: center;
+    }
+
+    .pain h2 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 48px;
+      color: #f0ece4;
+    }
+
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .pain-item {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.95rem;
+      color: #a09880;
+      line-height: 1.7;
+    }
+
+    .pain-item strong {
+      display: block;
+      color: #f0ece4;
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    /* SERVICES */
+    .services {
+      padding: 100px 60px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #c9a96e;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .services h2 {
+      font-size: 2rem;
+      font-weight: 400;
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .service-card {
+      border: 1px solid #1f1f1f;
+      padding: 48px;
+      margin-bottom: 32px;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .service-card:hover { border-color: #c9a96e44; }
+
+    .service-number {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: #c9a96e;
+      font-family: 'Arial', sans-serif;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .service-card h3 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .service-card p {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.95rem;
+      color: #a09880;
+      line-height: 1.8;
+      margin-bottom: 32px;
+      max-width: 560px;
+    }
+
+    .service-includes {
+      margin-bottom: 32px;
+    }
+
+    .service-includes li {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.9rem;
+      color: #c9a96e;
+      padding: 6px 0;
+      border-bottom: 1px solid #1a1a1a;
+      list-style: none;
+    }
+
+    .service-includes li::before {
+      content: '→ ';
+      color: #c9a96e;
+    }
+
+    .pricing-row {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .price-setup {
+      font-size: 2rem;
+      color: #f0ece4;
+    }
+
+    .price-setup span {
+      font-size: 1rem;
+      color: #a09880;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .price-monthly {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.9rem;
+      color: #a09880;
+      background: #141414;
+      padding: 6px 14px;
+      border: 1px solid #2a2a2a;
+    }
+
+    /* BUNDLE */
+    .bundle {
+      background: #0f0d09;
+      border: 1px solid #c9a96e44;
+      padding: 64px;
+      text-align: center;
+      max-width: 1000px;
+      margin: 0 auto 100px;
+    }
+
+    .bundle .section-label { margin-bottom: 24px; }
+
+    .bundle h2 {
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .bundle p {
+      font-family: 'Arial', sans-serif;
+      color: #a09880;
+      margin-bottom: 40px;
+      font-size: 0.95rem;
+    }
+
+    .bundle-price {
+      font-size: 3rem;
+      color: #c9a96e;
+      margin-bottom: 8px;
+    }
+
+    .bundle-price span {
+      font-size: 1.2rem;
+      color: #a09880;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .bundle-monthly {
+      font-family: 'Arial', sans-serif;
+      color: #a09880;
+      margin-bottom: 40px;
+      font-size: 0.95rem;
+    }
+
+    .bundle-cta {
+      display: inline-block;
+      background: #c9a96e;
+      color: #0a0a0a;
+      padding: 16px 48px;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-family: 'Arial', sans-serif;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+
+    .bundle-cta:hover { background: #e0bf86; }
+
+    /* HOW IT WORKS */
+    .how {
+      padding: 80px 60px;
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .how h2 {
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 64px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 40px;
+      text-align: left;
+    }
+
+    .step-num {
+      font-size: 2.5rem;
+      color: #c9a96e22;
+      font-family: 'Georgia', serif;
+      margin-bottom: 12px;
+    }
+
+    .step h4 {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.85rem;
+      color: #a09880;
+      line-height: 1.7;
+    }
+
+    /* SOCIAL PROOF */
+    .proof {
+      background: #0f0f0f;
+      padding: 80px 60px;
+      text-align: center;
+    }
+
+    .proof h2 {
+      font-size: 1.6rem;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .proof p {
+      font-family: 'Arial', sans-serif;
+      color: #a09880;
+      margin-bottom: 40px;
+      font-size: 0.95rem;
+    }
+
+    .proof-note {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.85rem;
+      color: #a09880;
+      max-width: 560px;
+      margin: 0 auto;
+      border: 1px solid #1f1f1f;
+      padding: 32px;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    .proof-note strong {
+      display: block;
+      margin-top: 16px;
+      color: #c9a96e;
+      font-style: normal;
+    }
+
+    /* CTA FOOTER */
+    .cta-footer {
+      padding: 100px 60px;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .cta-footer h2 {
+      font-size: 2.2rem;
+      font-weight: 400;
+      margin-bottom: 24px;
+      line-height: 1.3;
+    }
+
+    .cta-footer p {
+      font-family: 'Arial', sans-serif;
+      color: #a09880;
+      margin-bottom: 40px;
+      font-size: 0.95rem;
+    }
+
+    .cta-footer a {
+      display: inline-block;
+      background: #c9a96e;
+      color: #0a0a0a;
+      padding: 16px 48px;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-family: 'Arial', sans-serif;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+
+    .cta-footer a:hover { background: #e0bf86; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #1f1f1f;
+      padding: 32px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Arial', sans-serif;
+      font-size: 0.8rem;
+      color: #555;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 20px 24px; }
+      .hero { padding: 60px 24px; }
+      .hero h1 { font-size: 2rem; }
+      .services, .how, .cta-footer { padding: 60px 24px; }
+      .service-card { padding: 32px 24px; }
+      .bundle { padding: 40px 24px; margin: 0 24px 60px; }
+      .pain, .proof { padding: 60px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">AI Luxury</div>
+    <a href="mailto:Billy@huntingtonandellis.com" class="nav-cta">Book a Call</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">AI Systems for Real Estate Agents</div>
+    <h1>Stop doing everything<br /><em>manually.</em></h1>
+    <p>AI Luxury builds done-for-you automation systems so you can focus on clients, not admin. Follow-ups handled. Content posted. Leads tracked — automatically.</p>
+    <a href="mailto:Billy@huntingtonandellis.com" class="hero-cta">Get Started — From $99</a>
+  </section>
+  <div class="divider"></div>
+
+  <!-- PAIN POINTS -->
+  <section class="pain">
+    <h2>Sound familiar?</h2>
+    <div class="pain-grid">
+      <div class="pain-item">
+        <strong>Leads falling through the cracks</strong>
+        You followed up once. Then life happened. Now they've gone cold.
+      </div>
+      <div class="pain-item">
+        <strong>No consistent content</strong>
+        You know you should post more. You just never have the time.
+      </div>
+      <div class="pain-item">
+        <strong>Your CRM is a mess</strong>
+        Hundreds of contacts. No system. No idea who to call today.
+      </div>
+      <div class="pain-item">
+        <strong>Missing calls from buyers</strong>
+        They called while you were showing a home. They didn't leave a voicemail.
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services">
+    <div class="section-label">What We Build</div>
+    <h2>Three systems. One less thing to worry about.</h2>
+
+    <!-- CRM -->
+    <div class="service-card">
+      <div class="service-number">Pillar 01</div>
+      <h3>AI CRM + Assistant Setup</h3>
+      <p>We connect your contact database to an AI assistant that knows every lead, tracks every follow-up, and tells you exactly who to contact today. Built on Claude — the most powerful AI available.</p>
+      <ul class="service-includes">
+        <li>Full contact database import and organization</li>
+        <li>Automated follow-up cadences by lead type</li>
+        <li>Daily hot lead alerts sent directly to your phone</li>
+        <li>Follow Up Boss API integration</li>
+        <li>Telegram notifications for real-time updates</li>
+      </ul>
+      <div class="pricing-row">
+        <div class="price-setup">$99 <span>one-time setup</span></div>
+        <div class="price-monthly">+ $19/month maintenance</div>
+      </div>
+    </div>
+
+    <!-- SOCIAL -->
+    <div class="service-card">
+      <div class="service-number">Pillar 02</div>
+      <h3>Social Media Engine</h3>
+      <p>Record 1–2 long-form videos a month. We build the system that turns them into 30+ days of short-form content — automatically scheduled across TikTok, Instagram, and YouTube Shorts.</p>
+      <ul class="service-includes">
+        <li>ElevenLabs AI voiceover setup</li>
+        <li>CapCut production workflow template</li>
+        <li>OpusClip account setup + scheduling calendar</li>
+        <li>Connected to TikTok, Instagram, and YouTube Shorts</li>
+        <li>One long video → months of content</li>
+      </ul>
+      <div class="pricing-row">
+        <div class="price-setup">$150 <span>one-time setup</span></div>
+        <div class="price-monthly">+ $29/month if we run it for you</div>
+      </div>
+    </div>
+
+    <!-- CALLING -->
+    <div class="service-card">
+      <div class="service-number">Pillar 03</div>
+      <h3>AI Calling — Powered by Retell AI</h3>
+      <p>Never miss a lead again. An AI voice agent handles inbound calls, qualifies leads, and follows up automatically — 24/7. Fully customized to sound like your brand.</p>
+      <ul class="service-includes">
+        <li>Custom AI voice agent built on Retell AI</li>
+        <li>Inbound and outbound call handling</li>
+        <li>Lead qualification scripts tailored to your business</li>
+        <li>CRM logging — every call tracked automatically</li>
+        <li>Fully customizable tone, script, and flow</li>
+      </ul>
+      <div class="pricing-row">
+        <div class="price-setup">$300 <span>one-time setup</span></div>
+        <div class="price-monthly">+ $49/month maintenance</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUNDLE -->
+  <div class="bundle">
+    <div class="section-label">Best Value</div>
+    <h2>Get All Three</h2>
+    <p>CRM + Social Media Engine + AI Calling — fully set up and connected.</p>
+    <div class="bundle-price">$449 <span>setup</span></div>
+    <div class="bundle-monthly">+ $79/month to keep everything running</div>
+    <a href="mailto:Billy@huntingtonandellis.com" class="bundle-cta">Claim the Bundle</a>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Book a Call</h4>
+        <p>We learn your business, your tools, and what's not working. No tech knowledge required.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>We Build It</h4>
+        <p>We set up everything for you — CRM, content system, AI calling — customized to your brand.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>You Go Live</h4>
+        <p>You get a walkthrough, credentials, and ongoing support. We stay available as things evolve.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>We Maintain It</h4>
+        <p>Monthly maintenance keeps your system sharp. AI changes fast — we keep up so you don't have to.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <section class="proof">
+    <h2>Built by a realtor. Tested on a real business.</h2>
+    <p>AI Luxury isn't a tech company that guessed what agents need. It was built by an active Las Vegas real estate agent — for agents.</p>
+    <div class="proof-note">
+      "I built this system for my own real estate business first. It tracks my 2,400+ contacts, sends me daily lead alerts, and posts my content while I'm showing homes. Now I'm making it available to other agents."
+      <strong>— William Crawford, Las Vegas Real Estate Agent & Founder of AI Luxury</strong>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta-footer">
+    <h2>Ready to get your time back?</h2>
+    <p>Setup takes less than a week. Most agents see results in the first month. Spots are limited — we build each system personally.</p>
+    <a href="mailto:Billy@huntingtonandellis.com">Book Your Setup Call</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="logo" style="font-size:1rem;">AI Luxury</div>
+    <div>© 2026 AI Luxury · Billy@huntingtonandellis.com</div>
+  </footer>
+
+</body>
+</html>
