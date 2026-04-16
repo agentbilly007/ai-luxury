@@ -42,7 +42,7 @@
     a { color: inherit; text-decoration: none; }
 
     /* NAV */
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 60px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--black); z-index: 100; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 60px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); z-index: 100; }
     .logo { font-size: 1.3rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-family: var(--font-serif); }
     .nav-links { display: flex; gap: 2rem; align-items: center; }
     .nav-links a { font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray); transition: color 0.2s; }
@@ -58,14 +58,21 @@
     .btn-outline:hover { background: var(--gold); color: var(--black); }
 
     /* HERO */
-    .hero { padding: 100px 60px 70px; max-width: 860px; margin: 0 auto; text-align: center; }
-    .eyebrow { font-family: var(--font-sans); font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; }
-    .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 400; line-height: 1.2; margin-bottom: 32px; }
+    .hero-wrap { position: relative; overflow: hidden; }
+    #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    .hero { position: relative; z-index: 1; padding: 120px 60px 90px; max-width: 860px; margin: 0 auto; text-align: center; }
+    .eyebrow { font-family: var(--font-sans); font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 400; line-height: 1.2; margin-bottom: 32px; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
     .hero h1 em { font-style: italic; color: var(--gold); }
-    .hero-sub { font-family: var(--font-sans); font-size: 1rem; color: var(--gray); max-width: 600px; margin: 0 auto 20px; line-height: 1.9; }
-    .hero-note { font-family: var(--font-sans); font-size: 0.82rem; color: var(--gold); margin-bottom: 44px; }
-    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .hero-sub { font-family: var(--font-sans); font-size: 1rem; color: var(--gray); max-width: 600px; margin: 0 auto 20px; line-height: 1.9; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+    .hero-note { font-family: var(--font-sans); font-size: 0.82rem; color: var(--gold); margin-bottom: 44px; opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards; }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s ease 0.9s forwards; }
     .divider { width: 60px; height: 1px; background: var(--gold); margin: 70px auto; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     /* STORY */
     .story { max-width: 760px; margin: 0 auto; padding: 0 60px 80px; }
@@ -82,7 +89,8 @@
     .demo h2 { font-size: 1.7rem; font-weight: 400; text-align: center; margin-bottom: 12px; }
     .demo-sub { font-family: var(--font-sans); font-size: 0.93rem; color: var(--gray); text-align: center; margin-bottom: 48px; }
     .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
-    .demo-item { border: 1px solid var(--border); padding: 28px; }
+    .demo-item { border: 1px solid var(--border); padding: 28px; transition: border-color 0.3s, transform 0.3s; transform-style: preserve-3d; }
+    .demo-item:hover { border-color: #c9a96e44; transform: translateY(-4px) rotateX(2deg); }
     .demo-item .msg { font-family: var(--font-sans); font-size: 0.82rem; color: var(--gray); margin-bottom: 12px; }
     .demo-item .msg span { display: inline-block; background: #1a1a1a; border-radius: 12px; padding: 8px 14px; font-style: italic; }
     .demo-item .result { font-family: var(--font-sans); font-size: 0.85rem; color: var(--gold); }
@@ -93,6 +101,8 @@
     .pain-inner { max-width: 900px; margin: 0 auto; }
     .pain h2 { font-size: 1.8rem; font-weight: 400; text-align: center; margin-bottom: 48px; }
     .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
+    .pain-item { transition: transform 0.3s; }
+    .pain-item:hover { transform: translateY(-6px); }
     .pain-item strong { display: block; font-family: var(--font-sans); font-size: 0.9rem; color: var(--off-white); margin-bottom: 8px; }
     .pain-item p { font-family: var(--font-sans); font-size: 0.85rem; color: var(--gray); line-height: 1.7; }
 
@@ -102,6 +112,8 @@
     .how h2 { font-size: 1.9rem; font-weight: 400; margin-bottom: 12px; }
     .how-sub { font-family: var(--font-sans); font-size: 0.93rem; color: var(--gray); margin-bottom: 60px; }
     .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 40px; text-align: left; }
+    .step { transition: transform 0.3s; }
+    .step:hover { transform: translateY(-4px); }
     .step-num { font-size: 2.5rem; color: #c9a96e22; margin-bottom: 12px; }
     .step h4 { font-size: 1rem; font-weight: 400; margin-bottom: 8px; }
     .step p { font-family: var(--font-sans); font-size: 0.85rem; color: var(--gray); line-height: 1.7; }
@@ -111,14 +123,34 @@
     .services > .section-eyebrow { margin-bottom: 16px; }
     .services > h2 { font-size: 1.9rem; font-weight: 400; text-align: center; margin-bottom: 16px; }
     .services > p { font-family: var(--font-sans); font-size: 0.93rem; color: var(--gray); text-align: center; max-width: 560px; margin: 0 auto 60px; line-height: 1.8; }
-    .service-card { border: 1px solid var(--border); padding: 40px; margin-bottom: 24px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start; transition: border-color 0.2s; }
-    .service-card:hover { border-color: #c9a96e44; }
+
+    /* 3D Service Cards */
+    .card-3d-wrap { perspective: 1000px; margin-bottom: 24px; }
+    .service-card {
+      border: 1px solid var(--border); padding: 40px;
+      display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start;
+      transition: border-color 0.3s, transform 0.4s, box-shadow 0.4s;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .service-card:hover {
+      border-color: #c9a96e44;
+      transform: rotateX(3deg) rotateY(-2deg) translateY(-6px);
+      box-shadow: 0 20px 60px rgba(201,169,110,0.08);
+    }
     .service-card h3 { font-size: 1.3rem; font-weight: 400; margin-bottom: 10px; }
     .service-card p { font-family: var(--font-sans); font-size: 0.88rem; color: var(--gray); line-height: 1.7; max-width: 480px; }
     .service-price { text-align: right; white-space: nowrap; }
     .service-price .price { font-size: 1.6rem; color: var(--gold); display: block; }
     .service-price .price-label { font-family: var(--font-sans); font-size: 0.75rem; color: var(--gray); letter-spacing: 0.06em; text-transform: uppercase; }
-    .service-entry { background: #0f0d09; border: 1px solid var(--gold); padding: 40px; text-align: center; margin-top: 8px; }
+    .service-entry { background: #0f0d09; border: 1px solid var(--gold); padding: 40px; text-align: center; margin-top: 8px;
+      transition: transform 0.4s, box-shadow 0.4s;
+      transform-style: preserve-3d;
+    }
+    .service-entry:hover {
+      transform: translateY(-8px) rotateX(2deg);
+      box-shadow: 0 24px 60px rgba(201,169,110,0.12);
+    }
     .service-entry h3 { font-size: 1.5rem; font-weight: 400; margin-bottom: 14px; }
     .service-entry p { font-family: var(--font-sans); font-size: 0.93rem; color: var(--gray); margin-bottom: 28px; line-height: 1.8; max-width: 520px; margin-left: auto; margin-right: auto; }
     .service-entry .entry-price { font-size: 2.8rem; color: var(--gold); margin-bottom: 6px; }
@@ -149,6 +181,10 @@
     .faq-item { border-bottom: 1px solid var(--border); padding: 24px 0; }
     .faq-item h4 { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600; color: var(--off-white); margin-bottom: 10px; }
     .faq-item p { font-family: var(--font-sans); font-size: 0.88rem; color: var(--gray); line-height: 1.7; }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* FOOTER */
     footer { border-top: 1px solid var(--border); padding: 32px 60px; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-sans); font-size: 0.78rem; color: #555; flex-wrap: wrap; gap: 1rem; }
@@ -181,20 +217,23 @@
   </nav>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="eyebrow">AI Systems for Real Estate Agents</div>
-    <h1>I built an AI that runs<br /><em>my real estate business.</em><br />Now I'll build one for you.</h1>
-    <p class="hero-sub">I'm an active Las Vegas REALTOR® who got tired of watching leads go cold, paying developers thousands for simple website changes, and spending half my day on admin work. So I built an AI to handle it.</p>
-    <p class="hero-note">Now I set it up for other agents. You don't need to know anything about tech.</p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn btn-gold">Start for $99</a>
-      <a href="#how" class="btn btn-outline">See How It Works</a>
-    </div>
-  </section>
+  <div class="hero-wrap">
+    <canvas id="hero-canvas"></canvas>
+    <section class="hero">
+      <div class="eyebrow">AI Systems for Real Estate Agents</div>
+      <h1>I built an AI that runs<br /><em>my real estate business.</em><br />Now I'll build one for you.</h1>
+      <p class="hero-sub">I'm an active Las Vegas REALTOR® who got tired of watching leads go cold, paying developers thousands for simple website changes, and spending half my day on admin work. So I built an AI to handle it.</p>
+      <p class="hero-note">Now I set it up for other agents. You don't need to know anything about tech.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-gold">Start for $99</a>
+        <a href="#how" class="btn btn-outline">See How It Works</a>
+      </div>
+    </section>
+  </div>
   <div class="divider"></div>
 
   <!-- STORY -->
-  <section class="story">
+  <section class="story reveal">
     <div class="story-eyebrow">The Proof</div>
     <h2>I am the case study.</h2>
     <p>My name is <strong>William Crawford</strong>. I'm a licensed REALTOR® in Las Vegas, Nevada, working with Huntington & Ellis. I also have over 4,600 contacts in my database, a website I update by sending a text message, and an AI that tells me who to follow up with every morning while I'm drinking my coffee.</p>
@@ -206,23 +245,23 @@
   <!-- DEMO -->
   <section class="demo" id="demo">
     <div class="demo-inner">
-      <div class="section-eyebrow">Real Examples</div>
-      <h2>What it actually looks like</h2>
-      <p class="demo-sub">You send a text from your phone. Your AI handles the rest.</p>
+      <div class="section-eyebrow reveal">Real Examples</div>
+      <h2 class="reveal">What it actually looks like</h2>
+      <p class="demo-sub reveal">You send a text from your phone. Your AI handles the rest.</p>
       <div class="demo-grid">
-        <div class="demo-item">
+        <div class="demo-item reveal">
           <div class="msg"><span>"Add a blog post about moving to Las Vegas from California"</span></div>
           <div class="result">Page written, SEO optimized, and live on your website in minutes</div>
         </div>
-        <div class="demo-item">
+        <div class="demo-item reveal">
           <div class="msg"><span>"Who should I follow up with today?"</span></div>
           <div class="result">Pulls your CRM, finds overdue leads, drafts personalized messages</div>
         </div>
-        <div class="demo-item">
+        <div class="demo-item reveal">
           <div class="msg"><span>"Add John Smith — buyer looking in Henderson under $500K"</span></div>
           <div class="result">Contact added to Follow Up Boss with correct stage, source, and notes</div>
         </div>
-        <div class="demo-item">
+        <div class="demo-item reveal">
           <div class="msg"><span>"Let me know when 123 Main St goes Active on MLS"</span></div>
           <div class="result">Monitors the listing and texts you the moment status changes</div>
         </div>
@@ -233,21 +272,21 @@
   <!-- PAIN -->
   <section class="pain">
     <div class="pain-inner">
-      <h2>Sound familiar?</h2>
+      <h2 class="reveal">Sound familiar?</h2>
       <div class="pain-grid">
-        <div class="pain-item">
+        <div class="pain-item reveal">
           <strong>Leads going cold</strong>
           <p>You followed up once. Life got busy. Now they're gone — and you don't even know which ones need attention.</p>
         </div>
-        <div class="pain-item">
+        <div class="pain-item reveal">
           <strong>Paying too much for a website</strong>
           <p>$500/month to Luxury Presence — or $5,000 to a developer — for something an AI can manage through a text message.</p>
         </div>
-        <div class="pain-item">
+        <div class="pain-item reveal">
           <strong>No consistent social content</strong>
           <p>You know you should post. You just never have the time. So your competitors show up and you don't.</p>
         </div>
-        <div class="pain-item">
+        <div class="pain-item reveal">
           <strong>Admin eating your day</strong>
           <p>You got into real estate to work with people — not to update spreadsheets and send the same follow-up texts over and over.</p>
         </div>
@@ -258,26 +297,26 @@
   <!-- HOW IT WORKS -->
   <section class="how" id="how">
     <div class="how-inner">
-      <div class="section-eyebrow">The Process</div>
-      <h2>How we work together</h2>
-      <p class="how-sub">It starts with a conversation. No long contracts, no tech requirements on your end.</p>
+      <div class="section-eyebrow reveal">The Process</div>
+      <h2 class="reveal">How we work together</h2>
+      <p class="how-sub reveal">It starts with a conversation. No long contracts, no tech requirements on your end.</p>
       <div class="steps">
-        <div class="step">
+        <div class="step reveal">
           <div class="step-num">01</div>
           <h4>You fill out the form</h4>
           <p>Tell me what you're working with — your CRM, your tools, what's slowing you down. Takes 2 minutes.</p>
         </div>
-        <div class="step">
+        <div class="step reveal">
           <div class="step-num">02</div>
           <h4>We talk it through</h4>
           <p>I'll reach out to learn more about your business and show you exactly what your AI will do. Free, no obligation.</p>
         </div>
-        <div class="step">
+        <div class="step reveal">
           <div class="step-num">03</div>
           <h4>I build it</h4>
           <p>We start with the piece that will make the biggest difference. Usually done in a few days.</p>
         </div>
-        <div class="step">
+        <div class="step reveal">
           <div class="step-num">04</div>
           <h4>You use it. We grow it.</h4>
           <p>You start using your AI immediately. As your needs grow, we add to the system — and you pay for what creates value.</p>
@@ -288,72 +327,84 @@
 
   <!-- SERVICES -->
   <section class="services" id="services">
-    <div class="section-eyebrow">What I Build</div>
-    <h2>Services & Pricing</h2>
-    <p>I don't charge by feature lists. I charge based on the value it creates for your business. Here's what's available — we start where it makes the most sense for you.</p>
+    <div class="section-eyebrow reveal">What I Build</div>
+    <h2 class="reveal">Services & Pricing</h2>
+    <p class="reveal">I don't charge by feature lists. I charge based on the value it creates for your business. Here's what's available — we start where it makes the most sense for you.</p>
 
-    <div class="service-entry">
-      <h3>Start Here — AI Business Manager Setup</h3>
-      <p>The foundation everything else runs on. I set up your personal AI assistant, connect it to your phone via Telegram, and configure it to know your business. This is what you start with — and it can replace hours of admin work on day one.</p>
-      <div class="entry-price">$99</div>
-      <div class="entry-sub">One-time setup fee to get started</div>
-      <a href="#contact" class="btn btn-gold">Get Started for $99</a>
+    <div class="reveal">
+      <div class="service-entry">
+        <h3>Start Here — AI Business Manager Setup</h3>
+        <p>The foundation everything else runs on. I set up your personal AI assistant, connect it to your phone via Telegram, and configure it to know your business. This is what you start with — and it can replace hours of admin work on day one.</p>
+        <div class="entry-price">$99</div>
+        <div class="entry-sub">One-time setup fee to get started</div>
+        <a href="#contact" class="btn btn-gold">Get Started for $99</a>
+      </div>
     </div>
 
     <br />
 
-    <div class="service-card">
-      <div>
-        <h3>AI Website Manager</h3>
-        <p>Custom real estate website built and maintained entirely through your AI. Update pages, add blog posts, and publish new content by sending a text. No developer, no delays, no recurring designer fees.</p>
-      </div>
-      <div class="service-price">
-        <span class="price">$299</span>
-        <span class="price-label">One-time setup</span>
-      </div>
-    </div>
-
-    <div class="service-card">
-      <div>
-        <h3>AI CRM + Follow-Up System</h3>
-        <p>Your AI reads your contact database, identifies who's overdue, and drafts personalized follow-up messages in your voice — sent through your own phone number. Your leads hear from you. The AI handles the work.</p>
-      </div>
-      <div class="service-price">
-        <span class="price">$199</span>
-        <span class="price-label">One-time setup</span>
+    <div class="card-3d-wrap reveal">
+      <div class="service-card">
+        <div>
+          <h3>AI Website Manager</h3>
+          <p>Custom real estate website built and maintained entirely through your AI. Update pages, add blog posts, and publish new content by sending a text. No developer, no delays, no recurring designer fees.</p>
+        </div>
+        <div class="service-price">
+          <span class="price">$299</span>
+          <span class="price-label">One-time setup</span>
+        </div>
       </div>
     </div>
 
-    <div class="service-card">
-      <div>
-        <h3>Social Media Engine</h3>
-        <p>Record one video a month. We build a system that turns it into 30+ days of short-form content posted across TikTok, Instagram Reels, and YouTube Shorts — automatically.</p>
-      </div>
-      <div class="service-price">
-        <span class="price">$150</span>
-        <span class="price-label">One-time setup</span>
-      </div>
-    </div>
-
-    <div class="service-card">
-      <div>
-        <h3>AI Voice Calling</h3>
-        <p>An AI voice agent that answers your inbound calls when you're unavailable, qualifies the lead, and logs everything to your CRM. Built with your scripts. Available 24/7.</p>
-      </div>
-      <div class="service-price">
-        <span class="price">$300</span>
-        <span class="price-label">One-time setup</span>
+    <div class="card-3d-wrap reveal">
+      <div class="service-card">
+        <div>
+          <h3>AI CRM + Follow-Up System</h3>
+          <p>Your AI reads your contact database, identifies who's overdue, and drafts personalized follow-up messages in your voice — sent through your own phone number. Your leads hear from you. The AI handles the work.</p>
+        </div>
+        <div class="service-price">
+          <span class="price">$199</span>
+          <span class="price-label">One-time setup</span>
+        </div>
       </div>
     </div>
 
-    <div class="service-card">
-      <div>
-        <h3>Full System Build</h3>
-        <p>Everything above — fully set up, connected, and running. For agents or teams who want the complete picture built right from the start. Monthly maintenance available.</p>
+    <div class="card-3d-wrap reveal">
+      <div class="service-card">
+        <div>
+          <h3>Social Media Engine</h3>
+          <p>Record one video a month. We build a system that turns it into 30+ days of short-form content posted across TikTok, Instagram Reels, and YouTube Shorts — automatically.</p>
+        </div>
+        <div class="service-price">
+          <span class="price">$150</span>
+          <span class="price-label">One-time setup</span>
+        </div>
       </div>
-      <div class="service-price">
-        <span class="price">$899</span>
-        <span class="price-label">Setup + $99/mo</span>
+    </div>
+
+    <div class="card-3d-wrap reveal">
+      <div class="service-card">
+        <div>
+          <h3>AI Voice Calling</h3>
+          <p>An AI voice agent that answers your inbound calls when you're unavailable, qualifies the lead, and logs everything to your CRM. Built with your scripts. Available 24/7.</p>
+        </div>
+        <div class="service-price">
+          <span class="price">$300</span>
+          <span class="price-label">One-time setup</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-3d-wrap reveal">
+      <div class="service-card">
+        <div>
+          <h3>Full System Build</h3>
+          <p>Everything above — fully set up, connected, and running. For agents or teams who want the complete picture built right from the start. Monthly maintenance available.</p>
+        </div>
+        <div class="service-price">
+          <span class="price">$899</span>
+          <span class="price-label">Setup + $99/mo</span>
+        </div>
       </div>
     </div>
   </section>
@@ -361,10 +412,10 @@
   <!-- CONTACT FORM -->
   <section class="contact" id="contact">
     <div class="contact-inner">
-      <div class="section-eyebrow">Get Started</div>
-      <h2>Let's talk about your business</h2>
-      <p class="contact-sub">Fill this out and I'll reach out personally. No sales team, no automated follow-up — just me.</p>
-      <form class="contact-form" id="contactForm">
+      <div class="section-eyebrow reveal">Get Started</div>
+      <h2 class="reveal">Let's talk about your business</h2>
+      <p class="contact-sub reveal">Fill this out and I'll reach out personally. No sales team, no automated follow-up — just me.</p>
+      <form class="contact-form reveal" id="contactForm">
         <div class="form-row">
           <div>
             <label>Your Name</label>
@@ -405,28 +456,28 @@
 
   <!-- FAQ -->
   <section class="faq" id="faq">
-    <h2>Common Questions</h2>
-    <div class="faq-item">
+    <h2 class="reveal">Common Questions</h2>
+    <div class="faq-item reveal">
       <h4>Do I need to be tech-savvy?</h4>
       <p>No. If you can send a text message, you can use this. I handle all the technical setup. You just talk to your AI like you'd text a colleague.</p>
     </div>
-    <div class="faq-item">
+    <div class="faq-item reveal">
       <h4>What CRM do I need?</h4>
       <p>I currently integrate with Follow Up Boss. If you use a different CRM, reach out — most major platforms have APIs I can connect to.</p>
     </div>
-    <div class="faq-item">
+    <div class="faq-item reveal">
       <h4>Will the AI send messages without my approval?</h4>
       <p>Only if you want it to. Most agents start with draft-and-approve mode until they trust the system. We configure it however you're comfortable.</p>
     </div>
-    <div class="faq-item">
+    <div class="faq-item reveal">
       <h4>Why start at $99? What does that actually get me?</h4>
       <p>It gets your AI set up and connected to your phone. From there, we figure out together what will make the biggest impact for your specific business — and that's what we build next. No reason to charge you for things you don't need yet.</p>
     </div>
-    <div class="faq-item">
+    <div class="faq-item reveal">
       <h4>Will the AI sound like me?</h4>
       <p>We build a voice profile based on how you actually communicate. The more you use it, the better it gets. It's not perfect on day one — but it gets there fast.</p>
     </div>
-    <div class="faq-item">
+    <div class="faq-item reveal">
       <h4>Are you still an active real estate agent?</h4>
       <p>Yes. I'm actively working in Las Vegas with Huntington & Ellis. This isn't theory — everything I build for you is something I've already built and use for my own business.</p>
     </div>
@@ -439,6 +490,129 @@
   </footer>
 
   <script>
+    // ─── PARTICLE NETWORK (Three.js-style, pure canvas) ───────────────────────
+    (function() {
+      const canvas = document.getElementById('hero-canvas');
+      const ctx = canvas.getContext('2d');
+      const GOLD = 'rgba(201,169,110,';
+      let W, H, particles, mouse = { x: null, y: null };
+      const COUNT = window.innerWidth < 640 ? 50 : 100;
+      const MAX_DIST = 160;
+
+      function resize() {
+        W = canvas.width = canvas.offsetWidth;
+        H = canvas.height = canvas.offsetHeight;
+      }
+
+      function Particle() {
+        this.x = Math.random() * W;
+        this.y = Math.random() * H;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.r = Math.random() * 1.5 + 0.5;
+        this.pulse = Math.random() * Math.PI * 2;
+      }
+
+      function init() {
+        resize();
+        particles = Array.from({ length: COUNT }, () => new Particle());
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        // update
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.pulse += 0.02;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+
+          // mouse repel
+          if (mouse.x !== null) {
+            const dx = p.x - mouse.x, dy = p.y - mouse.y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            if (d < 100) {
+              p.x += dx / d * 1.5;
+              p.y += dy / d * 1.5;
+            }
+          }
+        });
+
+        // draw connections
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            if (d < MAX_DIST) {
+              const alpha = (1 - d / MAX_DIST) * 0.25;
+              ctx.beginPath();
+              ctx.strokeStyle = GOLD + alpha + ')';
+              ctx.lineWidth = 0.6;
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // draw nodes
+        particles.forEach(p => {
+          const glow = 0.5 + 0.5 * Math.sin(p.pulse);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * (1 + 0.3 * glow), 0, Math.PI * 2);
+          ctx.fillStyle = GOLD + (0.4 + 0.4 * glow) + ')';
+          ctx.fill();
+        });
+
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', () => { resize(); });
+      document.querySelector('.hero-wrap').addEventListener('mousemove', e => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      });
+      document.querySelector('.hero-wrap').addEventListener('mouseleave', () => {
+        mouse.x = null; mouse.y = null;
+      });
+
+      init();
+      draw();
+    })();
+
+    // ─── SCROLL REVEAL ─────────────────────────────────────────────────────────
+    (function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    })();
+
+    // ─── 3D CARD MOUSE TILT ────────────────────────────────────────────────────
+    document.querySelectorAll('.service-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `rotateX(${-y * 8}deg) rotateY(${x * 8}deg) translateY(-6px)`;
+        card.style.boxShadow = `${-x * 20}px ${-y * 20}px 40px rgba(201,169,110,0.08)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.boxShadow = '';
+      });
+    });
+
+    // ─── CONTACT FORM ──────────────────────────────────────────────────────────
     document.getElementById('contactForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const form = e.target;
