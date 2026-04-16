@@ -492,18 +492,23 @@
   <!-- ARIA CHAT WIDGET -->
   <style>
     #aria-bubble {
-      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
       width: 60px; height: 60px; border-radius: 50%;
       background: #0f0d09; border: 1.5px solid var(--gold);
       cursor: pointer; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 24px rgba(201,169,110,0.18);
+      box-shadow: 0 4px 24px rgba(201,169,110,0.25);
       transition: transform 0.2s, box-shadow 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      animation: aria-pulse 3s ease-in-out infinite;
     }
-    #aria-bubble:hover { transform: scale(1.08); box-shadow: 0 6px 32px rgba(201,169,110,0.28); }
-    #aria-bubble canvas { border-radius: 50%; }
+    @keyframes aria-pulse {
+      0%, 100% { box-shadow: 0 4px 24px rgba(201,169,110,0.2); }
+      50% { box-shadow: 0 4px 32px rgba(201,169,110,0.4); }
+    }
+    #aria-bubble:hover { transform: scale(1.08); }
     #aria-panel {
-      position: fixed; bottom: 100px; right: 28px; z-index: 998;
-      width: 340px; background: #0d0b09; border: 1px solid #2a2218;
+      position: fixed; bottom: 100px; right: 28px; z-index: 9998;
+      width: min(340px, calc(100vw - 40px)); background: #0d0b09; border: 1px solid #2a2218;
       box-shadow: 0 16px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,169,110,0.08);
       display: none; flex-direction: column; overflow: hidden;
       font-family: var(--font-sans);
@@ -550,12 +555,19 @@
   </style>
 
   <div id="aria-bubble" onclick="toggleAriaPanel()" title="Chat with Aria">
-    <canvas id="bubble-canvas" width="60" height="60"></canvas>
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="15" cy="13" r="5.5" stroke="#c9a96e" stroke-width="1.2"/>
+      <ellipse cx="9.5" cy="13" rx="2" ry="1.2" fill="#c9a96e" opacity="0.7"/>
+      <ellipse cx="20.5" cy="13" rx="2" ry="1.2" fill="#c9a96e" opacity="0.7"/>
+      <path d="M10 18.5 Q15 22 20 18.5" stroke="#c9a96e" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+    </svg>
   </div>
 
   <div id="aria-panel">
     <div class="aria-header">
-      <div class="aria-header-face"><canvas id="panel-face-canvas" width="36" height="36"></canvas></div>
+      <div class="aria-header-face" style="display:flex;align-items:center;justify-content:center;">
+        <svg width="22" height="22" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="13" r="5.5" stroke="#c9a96e" stroke-width="1.2"/><ellipse cx="9.5" cy="13" rx="2" ry="1.2" fill="#c9a96e" opacity="0.7"/><ellipse cx="20.5" cy="13" rx="2" ry="1.2" fill="#c9a96e" opacity="0.7"/><path d="M10 18.5 Q15 22 20 18.5" stroke="#c9a96e" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg>
+      </div>
       <div class="aria-header-info">
         <strong>Aria</strong>
         <span>AI Luxury Assistant</span>
@@ -652,59 +664,6 @@ Never make up specific numbers or claims you're not sure about.`;
       el.scrollTop = el.scrollHeight;
     }
 
-    // ─── BUBBLE FACE ANIMATION ────────────────────────────────────────────────
-    (function() {
-      const bc = document.getElementById('bubble-canvas');
-      const bctx = bc.getContext('2d');
-      const pc = document.getElementById('panel-face-canvas');
-      const pctx = pc.getContext('2d');
-      let t = 0;
-
-      function drawMiniface(ctx, size) {
-        const cx = size / 2, cy = size / 2, r = size * 0.42;
-        ctx.clearRect(0, 0, size, size);
-
-        // Glow
-        const g = ctx.createRadialGradient(cx, cy, r * 0.4, cx, cy, r * 1.2);
-        g.addColorStop(0, 'rgba(201,169,110,0.12)');
-        g.addColorStop(1, 'rgba(201,169,110,0)');
-        ctx.beginPath(); ctx.arc(cx, cy, r * 1.2, 0, Math.PI * 2);
-        ctx.fillStyle = g; ctx.fill();
-
-        // Circle
-        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(201,169,110,${0.5 + 0.2 * Math.sin(t)})`; ctx.lineWidth = 1; ctx.stroke();
-
-        // Face bg
-        ctx.beginPath(); ctx.arc(cx, cy, r - 1, 0, Math.PI * 2);
-        ctx.fillStyle = '#0e0c0a'; ctx.fill();
-
-        // Eyes
-        const ey = cy - r * 0.15;
-        const blink = Math.abs(Math.sin(t * 0.3)) > 0.97 ? 0 : 1;
-        [-r*0.28, r*0.28].forEach(ex => {
-          const ig = ctx.createRadialGradient(cx+ex, ey, 0, cx+ex, ey, r*0.14);
-          ig.addColorStop(0, `rgba(230,190,120,${0.8 + 0.2*Math.sin(t*1.5)})`);
-          ig.addColorStop(1, 'rgba(201,169,110,0)');
-          ctx.beginPath(); ctx.ellipse(cx+ex, ey, r*0.14, r*0.1*blink, 0, 0, Math.PI*2);
-          ctx.fillStyle = ig; ctx.fill();
-        });
-
-        // Mouth
-        ctx.beginPath();
-        ctx.moveTo(cx - r*0.22, cy + r*0.3);
-        ctx.quadraticCurveTo(cx, cy + r*0.42, cx + r*0.22, cy + r*0.3);
-        ctx.strokeStyle = `rgba(201,169,110,0.45)`; ctx.lineWidth = 0.8; ctx.stroke();
-      }
-
-      function loop() {
-        t += 0.025;
-        drawMiniface(bctx, 60);
-        drawMiniface(pctx, 36);
-        requestAnimationFrame(loop);
-      }
-      loop();
-    })();
   </script>
 
   <script>
