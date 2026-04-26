@@ -12,16 +12,23 @@ export async function POST(req: Request) {
   const { messages } = await req.json()
 
   // Fetch recent feed posts as context
-  const { data: posts } = await supabase
+  const { data: rawPosts } = await supabase
     .from('posts')
     .select('content, profiles(full_name)')
     .order('created_at', { ascending: false })
     .limit(20)
 
-  const feedContext = posts && posts.length > 0
-    ? 'Recent community insights:\n' + posts.map((p: { content: string; profiles?: { full_name: string } | null }) =>
-        `- ${p.profiles?.full_name || 'Member'}: ${p.content}`
-      ).join('\n')
+  type PostWithProfile = { content: string; profiles: { full_name: string } | { full_name: string }[] | null }
+  const posts = (rawPosts || []) as PostWithProfile[]
+
+  function getProfileName(profiles: PostWithProfile['profiles']): string {
+    if (!profiles) return 'Member'
+    if (Array.isArray(profiles)) return profiles[0]?.full_name || 'Member'
+    return profiles.full_name || 'Member'
+  }
+
+  const feedContext = posts.length > 0
+    ? 'Recent community insights:\n' + posts.map(p => `- ${getProfileName(p.profiles)}: ${p.content}`).join('\n')
     : ''
 
   const systemPrompt = `You are a personal AI assistant for a member of AI Luxury Network — an exclusive community for luxury professionals.
