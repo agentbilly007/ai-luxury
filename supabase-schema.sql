@@ -1,6 +1,6 @@
--- Run this in your Supabase SQL editor
+-- Run this in your Supabase SQL editor (safe to run multiple times)
 
--- Profiles (auto-created on signup)
+-- Profiles
 create table if not exists profiles (
   id uuid references auth.users on delete cascade primary key,
   full_name text,
@@ -8,6 +8,9 @@ create table if not exists profiles (
 );
 
 alter table profiles enable row level security;
+
+drop policy if exists "Users can read all profiles" on profiles;
+drop policy if exists "Users can update own profile" on profiles;
 create policy "Users can read all profiles" on profiles for select using (true);
 create policy "Users can update own profile" on profiles for update using (auth.uid() = id);
 
@@ -21,7 +24,8 @@ begin
 end;
 $$ language plpgsql security definer;
 
-create or replace trigger on_auth_user_created
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
 
@@ -34,6 +38,9 @@ create table if not exists posts (
 );
 
 alter table posts enable row level security;
+
+drop policy if exists "Members can read all posts" on posts;
+drop policy if exists "Members can insert own posts" on posts;
 create policy "Members can read all posts" on posts for select using (auth.uid() is not null);
 create policy "Members can insert own posts" on posts for insert with check (auth.uid() = user_id);
 
@@ -48,5 +55,8 @@ create table if not exists subscriptions (
 );
 
 alter table subscriptions enable row level security;
+
+drop policy if exists "Users can read own subscription" on subscriptions;
+drop policy if exists "Service role can write subscriptions" on subscriptions;
 create policy "Users can read own subscription" on subscriptions for select using (auth.uid() = user_id);
 create policy "Service role can write subscriptions" on subscriptions for all using (true);
