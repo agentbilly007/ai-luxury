@@ -8,7 +8,7 @@ interface Post {
   content: string
   created_at: string
   user_id: string
-  profiles?: { full_name: string } | null
+  author_name?: string
 }
 
 export default function FeedClient({ initialPosts, userId }: { initialPosts: Post[], userId: string }) {
@@ -27,13 +27,13 @@ export default function FeedClient({ initialPosts, userId }: { initialPosts: Pos
     const { data, error } = await supabase
       .from('posts')
       .insert({ content: text, user_id: userId })
-      .select('*, profiles(full_name)')
+      .select('*')
       .single()
 
     if (error) {
       setPostError(error.message)
     } else if (data) {
-      setPosts([data, ...posts])
+      setPosts([{ ...data, author_name: 'You' }, ...posts])
       setText('')
     }
     setPosting(false)
@@ -85,7 +85,7 @@ export default function FeedClient({ initialPosts, userId }: { initialPosts: Pos
             <div key={post.id} className="border border-white/10 rounded-xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-yellow-400 text-sm font-semibold">
-                  {post.profiles?.full_name || 'Member'}
+                  {post.author_name || 'Member'}
                 </span>
                 <span className="text-white/30 text-xs">{timeAgo(post.created_at)}</span>
               </div>

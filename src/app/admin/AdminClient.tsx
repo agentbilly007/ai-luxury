@@ -21,8 +21,7 @@ interface Post {
   user_id: string
   content: string
   created_at: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  profiles: any
+  author_name?: string
 }
 
 export default function AdminClient({
@@ -117,9 +116,7 @@ export default function AdminClient({
             <div className="flex flex-col gap-3">
               {posts.length === 0 && <p className="text-white/30">No posts yet.</p>}
               {posts.map(post => {
-                const name = Array.isArray(post.profiles)
-                  ? post.profiles[0]?.full_name
-                  : post.profiles?.full_name
+                const name = post.author_name
                 return (
                   <div key={post.id} className="border border-white/10 rounded-xl px-5 py-4">
                     <div className="flex items-center justify-between mb-2">

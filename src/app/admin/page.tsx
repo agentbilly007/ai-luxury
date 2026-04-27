@@ -15,24 +15,25 @@ export default async function AdminPage() {
     .select('*')
     .order('created_at', { ascending: false })
 
-  const { data: posts } = await supabase
+  const { data: rawPosts } = await supabase
     .from('posts')
-    .select('*, profiles(full_name)')
+    .select('*')
     .order('created_at', { ascending: false })
     .limit(100)
 
-  // Get all users via service role — stored in auth.users
-  // We'll use profiles table as proxy
   const { data: profiles } = await supabase
     .from('profiles')
     .select('*')
     .order('created_at', { ascending: false })
 
+  const profileMap = Object.fromEntries((profiles || []).map(p => [p.id, p.full_name]))
+  const posts = (rawPosts || []).map(p => ({ ...p, author_name: profileMap[p.user_id] || 'Member' }))
+
   return (
     <AdminClient
       profiles={profiles || []}
       subscriptions={subscriptions || []}
-      posts={posts || []}
+      posts={posts}
     />
   )
 }
