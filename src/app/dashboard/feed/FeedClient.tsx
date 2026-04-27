@@ -15,12 +15,14 @@ export default function FeedClient({ initialPosts, userId }: { initialPosts: Pos
   const [posts, setPosts] = useState(initialPosts)
   const [text, setText] = useState('')
   const [posting, setPosting] = useState(false)
+  const [postError, setPostError] = useState('')
   const supabase = createClient()
 
   async function submitPost(e: React.FormEvent) {
     e.preventDefault()
     if (!text.trim() || posting) return
     setPosting(true)
+    setPostError('')
 
     const { data, error } = await supabase
       .from('posts')
@@ -28,7 +30,9 @@ export default function FeedClient({ initialPosts, userId }: { initialPosts: Pos
       .select('*, profiles(full_name)')
       .single()
 
-    if (!error && data) {
+    if (error) {
+      setPostError(error.message)
+    } else if (data) {
       setPosts([data, ...posts])
       setText('')
     }
@@ -61,11 +65,12 @@ export default function FeedClient({ initialPosts, userId }: { initialPosts: Pos
             rows={3}
             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-yellow-400 resize-none"
           />
-          <div className="flex justify-end mt-2">
+          <div className="flex items-center justify-between mt-2">
+            {postError && <p className="text-red-400 text-xs">{postError}</p>}
             <button
               type="submit"
               disabled={posting || !text.trim()}
-              className="bg-yellow-400 text-black px-5 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition disabled:opacity-40 text-sm"
+              className="ml-auto bg-yellow-400 text-black px-5 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition disabled:opacity-40 text-sm"
             >
               {posting ? 'Posting...' : 'Post'}
             </button>
