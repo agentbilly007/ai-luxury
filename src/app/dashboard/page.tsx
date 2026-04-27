@@ -8,6 +8,12 @@ export default async function DashboardPage() {
 
   if (!user) redirect('/login')
 
+  // Ensure profile row exists for users created before schema was applied
+  await supabase.from('profiles').upsert({
+    id: user.id,
+    full_name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'Member',
+  })
+
   const name = user.user_metadata?.full_name || user.email
 
   return (

@@ -48,7 +48,7 @@ export default function SignupPage() {
     <main className="min-h-screen bg-black flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <h1 className="text-2xl font-bold text-white text-center mb-2">Join AI Luxury Network</h1>
-        <p className="text-white/50 text-sm text-center mb-8">$97/month — cancel anytime</p>
+        <p className="text-white/50 text-sm text-center mb-8">$1 first month · Then $9/month — cancel anytime</p>
         <form onSubmit={handleSignup} className="flex flex-col gap-4">
           <input
             type="text"

@@ -22,9 +22,12 @@ export default function LandingPage() {
           AI Luxury Network is an exclusive community where your personal AI learns from every member —
           so the smarter the network gets, the smarter your AI gets.
         </p>
-        <Link href="/signup" className="bg-yellow-400 text-black px-8 py-4 rounded text-lg font-bold hover:bg-yellow-300 transition">
-          Get Access — $97/month
-        </Link>
+        <div className="flex flex-col items-center gap-2">
+          <Link href="/signup" className="bg-yellow-400 text-black px-8 py-4 rounded text-lg font-bold hover:bg-yellow-300 transition">
+            Get Access — $1 First Month
+          </Link>
+          <p className="text-white/30 text-sm">Limited time offer · Then $9/month</p>
+        </div>
       </section>
 
       {/* Features */}

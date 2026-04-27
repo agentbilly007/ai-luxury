@@ -15,8 +15,8 @@ export async function POST(req: Request) {
       {
         price_data: {
           currency: 'usd',
-          product_data: { name: 'AI Luxury Network Membership' },
-          unit_amount: 9700,
+          product_data: { name: 'AI Luxury Network Membership — Limited Time Offer' },
+          unit_amount: 100,
           recurring: { interval: 'month' },
         },
         quantity: 1,
