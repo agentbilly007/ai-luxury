@@ -257,44 +257,56 @@
     .step h4 { font-size: 1rem; font-weight: 600; margin-bottom: 10px; }
     .step p { font-size: 0.85rem; color: var(--gray); line-height: 1.7; font-weight: 300; }
 
-    /* SERVICES */
-    .service-entry {
-      padding: 48px; border-radius: 24px; text-align: center; margin-bottom: 20px;
-      background: linear-gradient(135deg, rgba(41,151,255,0.1), rgba(191,90,242,0.08));
-      border: 1px solid rgba(41,151,255,0.25);
-      transition: all 0.4s;
-      position: relative; overflow: hidden;
+    /* PRICING TIERS */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: stretch;
     }
-    .service-entry::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(41,151,255,0.6), transparent);
-    }
-    .service-entry:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 30px 80px rgba(41,151,255,0.15), 0 0 0 1px rgba(41,151,255,0.3);
-    }
-    .service-entry h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.02em; }
-    .service-entry p { font-size: 0.93rem; color: var(--gray-light); max-width: 520px; margin: 0 auto 32px; line-height: 1.8; font-weight: 300; }
-    .entry-price { font-size: 3rem; font-weight: 700; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.04em; }
-    .entry-sub { font-size: 0.82rem; color: var(--gray); margin-bottom: 32px; }
+    @media (max-width: 800px) { .tier-grid { grid-template-columns: 1fr; } }
 
-    .service-card {
-      padding: 32px 36px; border-radius: 18px; margin-bottom: 14px;
-      display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center;
+    .tier-card {
+      padding: 40px 32px; border-radius: 22px; text-align: center;
       background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
-      transition: all 0.35s; cursor: default;
+      transition: all 0.4s; position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
     }
-    .service-card:hover {
+    .tier-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(41,151,255,0.4), transparent);
+    }
+    .tier-card:hover {
+      transform: translateY(-6px);
       background: rgba(255,255,255,0.05);
       border-color: rgba(41,151,255,0.3);
-      transform: translateY(-3px) translateX(4px);
-      box-shadow: -4px 12px 40px rgba(41,151,255,0.08);
+      box-shadow: 0 24px 60px rgba(41,151,255,0.12);
     }
-    .service-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
-    .service-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.7; max-width: 460px; font-weight: 300; }
-    .service-price { text-align: right; white-space: nowrap; }
-    .service-price .price { font-size: 1.6rem; font-weight: 700; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; }
-    .service-price .price-label { font-size: 0.72rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; }
+    .tier-card.featured {
+      background: linear-gradient(135deg, rgba(41,151,255,0.1), rgba(191,90,242,0.08));
+      border-color: rgba(41,151,255,0.4);
+    }
+    .tier-card.featured::before {
+      background: linear-gradient(90deg, transparent, rgba(41,151,255,0.8), transparent);
+    }
+    .tier-badge {
+      display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; padding: 5px 14px; border-radius: 980px;
+      background: rgba(41,151,255,0.15); color: var(--blue);
+      border: 1px solid rgba(41,151,255,0.3); margin-bottom: 24px;
+    }
+    .tier-badge.popular { background: var(--blue); color: #000; border-color: var(--blue); }
+    .tier-name { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .tier-price {
+      font-size: 2.8rem; font-weight: 700; letter-spacing: -0.04em; margin: 16px 0 4px;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .tier-price-label { font-size: 0.78rem; color: var(--gray); margin-bottom: 24px; }
+    .tier-desc { font-size: 0.88rem; color: var(--gray-light); line-height: 1.8; font-weight: 300; margin-bottom: 28px; flex: 1; }
+    .tier-features { list-style: none; text-align: left; margin-bottom: 32px; display: flex; flex-direction: column; gap: 10px; }
+    .tier-features li { font-size: 0.83rem; color: var(--gray-light); padding-left: 20px; position: relative; line-height: 1.5; }
+    .tier-features li::before { content: '✓'; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
+    .tier-cta { margin-top: auto; }
 
     /* CONTACT FORM */
     .contact { background: transparent; }
@@ -389,8 +401,8 @@
       <p class="hero-sub">I'm an active Las Vegas REALTOR® who got tired of watching leads go cold, paying developers thousands, and spending half my day on admin. So I built an AI to handle it.</p>
       <p class="hero-note">No tech skills needed. You don't need to know how it works — just that it does.</p>
       <div class="hero-actions">
-        <a href="#contact" class="btn btn-primary">Start for $99</a>
-        <a href="#how" class="btn btn-glass">See How It Works</a>
+        <a href="#services" class="btn btn-primary">See How to Get Started</a>
+        <a href="#how" class="btn btn-glass">How It Works</a>
       </div>
     </section>
   </div>
@@ -502,85 +514,71 @@
   <!-- SERVICES -->
   <section id="services">
     <div class="section-wrap">
-      <div class="section-tag reveal">What I Build</div>
-      <h2 class="section-title reveal">Services & Pricing</h2>
-      <p class="section-sub reveal">I don't charge by feature lists. I charge based on the value it creates for your business. We start where it makes the most sense for you.</p>
+      <div class="section-tag reveal">How We Work Together</div>
+      <h2 class="section-title reveal">Pick Your Level</h2>
+      <p class="section-sub reveal">Claude is free to start using — the only question is how much help you want getting there. Most people start at one level and move up as their business grows.</p>
 
-      <div class="reveal">
-        <div class="service-entry">
-          <h3>Start Here — AI Business Manager Setup</h3>
-          <p>The foundation everything else runs on. I set up your personal AI assistant, connect it to your phone via Telegram, and configure it to know your business. This is what you start with — and it can replace hours of admin work on day one.</p>
-          <div class="entry-price">$99</div>
-          <div class="entry-sub">One-time setup fee to get started</div>
-          <a href="#contact" class="btn btn-primary">Get Started for $99</a>
-        </div>
-      </div>
+      <div class="tier-grid reveal">
 
-      <br />
-
-      <div class="reveal">
-        <div class="service-card">
-          <div>
-            <h3>AI Website Manager</h3>
-            <p>Custom real estate website built and maintained entirely through your AI. Update pages, add blog posts, publish new content by sending a text. No developer, no delays, no recurring fees.</p>
-          </div>
-          <div class="service-price">
-            <span class="price">$299</span>
-            <span class="price-label">One-time setup</span>
+        <!-- TIER 1: DIY -->
+        <div class="tier-card">
+          <div><span class="tier-badge">DIY</span></div>
+          <div class="tier-name">Do It Yourself</div>
+          <div class="tier-price">Free</div>
+          <div class="tier-price-label">Always free</div>
+          <p class="tier-desc">Join the community, follow along, and set it up on your own. Claude is free to use — you just need a computer and willingness to learn.</p>
+          <ul class="tier-features">
+            <li>Access to the Discord community</li>
+            <li>Copy-paste templates and prompts</li>
+            <li>Step-by-step guides shared in Discord</li>
+            <li>Ask questions, get answers from the group</li>
+            <li>Learn from others doing the same thing</li>
+          </ul>
+          <div class="tier-cta">
+            <a href="https://discord.gg/your-invite" class="btn btn-glass" style="width:100%;text-align:center;display:block;">Join the Community</a>
           </div>
         </div>
-      </div>
 
-      <div class="reveal">
-        <div class="service-card">
-          <div>
-            <h3>AI CRM + Follow-Up System</h3>
-            <p>Your AI reads your contact database, identifies who's overdue, and drafts personalized follow-up messages in your voice — sent through your own phone number.</p>
-          </div>
-          <div class="service-price">
-            <span class="price">$199</span>
-            <span class="price-label">One-time setup</span>
+        <!-- TIER 2: SETUP -->
+        <div class="tier-card featured">
+          <div><span class="tier-badge popular">Most Popular</span></div>
+          <div class="tier-name">Claude Setup</div>
+          <div class="tier-price">$100</div>
+          <div class="tier-price-label">One-time · yours to keep</div>
+          <p class="tier-desc">I come to you (or connect remotely), install Claude Code on your computer, and get it talking to your phone. You leave the session able to text your AI and have it work for you.</p>
+          <ul class="tier-features">
+            <li>Claude Code installed and configured</li>
+            <li>Connected to your phone via Telegram</li>
+            <li>Basic CRM integration (Follow Up Boss)</li>
+            <li>1-hour walkthrough of what it can do</li>
+            <li>Starter prompts tailored to your business</li>
+            <li>Community access included</li>
+          </ul>
+          <div class="tier-cta">
+            <a href="#contact" class="btn btn-primary" style="width:100%;text-align:center;display:block;">Book My Setup — $100</a>
           </div>
         </div>
-      </div>
 
-      <div class="reveal">
-        <div class="service-card">
-          <div>
-            <h3>Social Media Engine</h3>
-            <p>Record one video a month. We build a system that turns it into 30+ days of short-form content posted across TikTok, Instagram Reels, and YouTube Shorts — automatically.</p>
-          </div>
-          <div class="service-price">
-            <span class="price">$150</span>
-            <span class="price-label">One-time setup</span>
+        <!-- TIER 3: DFY -->
+        <div class="tier-card">
+          <div><span class="tier-badge">Done For You</span></div>
+          <div class="tier-name">Full AI Business</div>
+          <div class="tier-price">$500+</div>
+          <div class="tier-price-label">Per month · fully managed</div>
+          <p class="tier-desc">You run your business. I run your AI. Every automation, follow-up system, website update, and content piece — handled. You just talk to me and it gets done.</p>
+          <ul class="tier-features">
+            <li>Everything in the Setup tier</li>
+            <li>Custom automations built for your workflow</li>
+            <li>AI-managed CRM and lead follow-up</li>
+            <li>Website updates via text message</li>
+            <li>Monthly content and social media strategy</li>
+            <li>Ongoing builds as your business grows</li>
+          </ul>
+          <div class="tier-cta">
+            <a href="#contact" class="btn btn-glass" style="width:100%;text-align:center;display:block;">Let's Talk</a>
           </div>
         </div>
-      </div>
 
-      <div class="reveal">
-        <div class="service-card">
-          <div>
-            <h3>AI Voice Calling</h3>
-            <p>An AI voice agent that answers your inbound calls when you're unavailable, qualifies the lead, and logs everything to your CRM. Built with your scripts. Available 24/7.</p>
-          </div>
-          <div class="service-price">
-            <span class="price">$300</span>
-            <span class="price-label">One-time setup</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="reveal">
-        <div class="service-card">
-          <div>
-            <h3>Full System Build</h3>
-            <p>Everything above — fully set up, connected, and running. For agents or teams who want the complete picture built right from the start. Monthly maintenance available.</p>
-          </div>
-          <div class="service-price">
-            <span class="price">$899</span>
-            <span class="price-label">Setup + $99/mo</span>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -647,8 +645,8 @@
         <p>Only if you want it to. Most agents start with draft-and-approve mode until they trust the system. We configure it however you're comfortable.</p>
       </div>
       <div class="faq-item reveal">
-        <h4>Why start at $99? What does that actually get me?</h4>
-        <p>It gets your AI set up and connected to your phone. From there, we figure out together what will make the biggest impact for your specific business — and that's what we build next.</p>
+        <h4>What's the difference between the $100 setup and Done-For-You?</h4>
+        <p>The $100 setup gets Claude installed and running on your computer — you leave the session able to text your AI and have it work for you. Done-For-You means I manage the whole thing ongoing: building automations, handling follow-up, creating content. One is a one-time install, the other is an ongoing partnership.</p>
       </div>
       <div class="faq-item reveal">
         <h4>Will the AI sound like me?</h4>
@@ -765,9 +763,9 @@
     // ─── ARIA WIDGET ─────────────────────────────────────────────────────────────
     const ARIA_SYSTEM = `You are Aria, the AI assistant for AI Luxury — a service that builds AI systems for real estate agents.
 Founded by William Crawford, an active Las Vegas REALTOR® with Huntington & Ellis.
-Services: $99 AI Business Manager setup, $299 AI Website Manager, $199 AI CRM + Follow-Up, $150 Social Media Engine, $300 AI Voice Calling, $899 Full System.
+Three tiers: (1) Free — join the Discord community and learn DIY. (2) $100 one-time setup — William installs Claude Code on your computer, connects it to your phone, you leave ready to use your AI. (3) $500+/mo Done-For-You — William manages your entire AI operation.
 Keep responses SHORT (2-3 sentences). Be warm, confident, and helpful.
-If they seem interested, encourage them to fill out the form on the page to get started.
+If they seem interested, encourage them to fill out the form to get started or ask which tier fits them.
 Never make up specific numbers or claims you're not sure about.`;
 
     let ariaMessages = [];
